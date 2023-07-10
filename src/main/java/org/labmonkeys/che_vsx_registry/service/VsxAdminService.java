@@ -135,6 +135,7 @@ public class VsxAdminService implements VsxAdminApi {
     }
 
     @Override
+    @Transactional
     public Response deleteExtensionVersion(String publisher, String extensionName, String version) {
         
         ExtensionVersionId id = new ExtensionVersionId(publisher, extensionName, version);
@@ -143,6 +144,7 @@ public class VsxAdminService implements VsxAdminApi {
     }
 
     @Override
+    @Transactional
     public Response deleteExtension(String publisher, String extensionName) {
         
         ExtensionId id = new ExtensionId(publisher, extensionName);

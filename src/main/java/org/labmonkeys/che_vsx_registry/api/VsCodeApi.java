@@ -1,7 +1,6 @@
 package org.labmonkeys.che_vsx_registry.api;
 
-import org.labmonkeys.che_vsx_registry.dto.query.FilterDto;
-
+import org.labmonkeys.che_vsx_registry.dto.query.ExtensionQueryDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -23,7 +22,7 @@ public interface VsCodeApi {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response extensionQuery(FilterDto query, @Context UriInfo uriInfo);
+    public Response extensionQuery(ExtensionQueryDto query, @Context UriInfo uriInfo);
 
     @Path("/vscode/asset/{publisher}/{extensionName}/{version}/{assetType}")
     @GET
