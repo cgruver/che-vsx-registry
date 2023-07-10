@@ -1,0 +1,158 @@
+schemaVersion: 2.2.0
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+metadata:
+  name: che-vsx-registry
+projects:
+- name: che-vsx-registry
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: main
+    remotes:
+      origin: https://github.com/cgruver/che-vsx-registry.git
+components:
+- name: dev-tools
+  container: 
+    image: quay.io/cgruver0/che/che-dev-image:latest
+    memoryRequest: 1Gi
+    memoryLimit: 6Gi
+    cpuRequest: 500m
+    cpuLimit: 2000m
+    mountSources: true
+    sourceMapping: /projects
+    env:
+    - name: SHELL
+      value: "/bin/zsh"
+    - name: HOME
+      value: "/projects/home"
+    - name: HISTFILE
+      value: "/projects/home/.sh_history"
+    - name: TESTCONTAINERS_RYUK_DISABLED
+      value: "true"
+    - name: TESTCONTAINERS_CHECKS_DISABLE
+      value: "true"
+    - name: DOCKER_HOST
+      value: "tcp://127.0.0.1:2475"
+    - name: CONTAINER_HOST
+      value: "tcp://127.0.0.1:2475"
+    - name: VSCODE_DEFAULT_WORKSPACE
+      value: "/projects/che-vsx-registry/che-vsx-registry.code-workspace"
+    - name: DEBUG_PORT
+      value: '5858'
+    - name: JAVA_HOME 
+      value: /etc/alternatives/jre_17
+    - name: API_PORT
+      value: '8080'
+    - name: DB_USER
+      value: postgres
+    - name: DB_PWD
+      value: postgres
+    - name: DB_HOST
+      value: localhost
+    - name: DB_SCHEMA
+      value: postgres
+    - name: CORS_ORIGINS
+      value: "/.*/"
+    - name: CORS_METHODS
+      value: "GET,POST,DELETE"
+    volumeMounts:
+    - name: home
+      path: /projects/home
+    endpoints:
+      - name: kubedock
+        targetPort: 2475
+        exposure: none
+      - name: https-quarkus
+        targetPort: 8080
+        exposure: public
+        protocol: https
+      - name: debug
+        exposure: none
+        targetPort: 5858
+      - name: dt-socket
+        exposure: none
+        targetPort: 5005
+- name: postgres
+  container:
+    image: quay.io/sclorg/postgresql-15-c9s:c9s
+    memoryLimit: 512M
+    sourceMapping: /projects
+    mountSources: true
+    env:
+    - name: POSTGRESQL_USER
+      value: postgres
+    - name: POSTGRESQL_PASSWORD
+      value: postgres
+    - name: POSTGRESQL_DATABASE
+      value: postgres
+    volumeMounts:
+    - name: pgdata
+      path: /var/lib/pgsql/data
+    endpoints:
+      - name: postgres
+        targetPort: 5432
+        exposure: internal
+- name: oc-cli
+  container:
+    args:
+      - '-c'
+      - >-
+        mkdir -p /projects/bin && cp /usr/bin/oc /projects/bin/oc && cp /usr/bin/kubectl /projects/bin/kubectl
+    command:
+      - /bin/bash
+    image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+    sourceMapping: /projects
+    mountSources: true
+    memoryLimit: 256M
+- volume:
+    size: 4Gi
+  name: projects
+- volume:
+    size: 2Gi
+  name: home
+- volume:
+    size: 2Gi
+  name: pgdata
+commands:
+- exec:
+    commandLine: mvn package
+    component: dev-tools
+    group:
+      isDefault: true
+      kind: build
+    workingDir: '/projects/che-vsx-registry'
+  id: package
+- exec:
+    commandLine: mvn package -Dnative -Dmaven.test.skip -Dquarkus.native.native-image-xmx=2G
+    component: dev-tools
+    group:
+      kind: build
+    label: Package Native
+    workingDir: '/projects/che-vsx-registry'
+  id: package-native
+- exec:
+    commandLine: 'quarkus dev -Dmaven.repo.local=${HOME}/.m2/repository -Dquarkus.http.host=0.0.0.0'
+    component: dev-tools
+    hotReloadCapable: true
+    group:
+      isDefault: true
+      kind: run
+    label: Start Quarkus Development mode (Hot reload)
+    workingDir: '/projects/che-vsx-registry'
+  id: quarkus-dev-mode
+- exec:
+    commandLine: "kubedock server --port-forward"
+    component: dev-tools
+    group:
+      kind: run
+    label: Kubedock
+    workingDir: '/'
+  id: kubedock
+- apply:
+    component: oc-cli
+    label: Copy OpenShift CLI
+  id: cp-oc-cli
+events:
+  preStart:
+    - cp-oc-cli
