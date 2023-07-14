@@ -26,6 +26,7 @@
 		"workbench.preferredDarkColorTheme": "Winter is Coming (Dark Blue)",
 		"workbench.preferredLightColorTheme": "Winter is Coming (Light)",
 		"java.server.launchMode": "Hybrid",
-		"java.configuration.updateBuildConfiguration": "automatic"
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"files.autoSave": "off"
 	}
 }
