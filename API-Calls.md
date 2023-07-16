@@ -1637,6 +1637,52 @@ Connection: close
 
 ```json
 {
+  "filters": [
+    {
+      "criteria": [
+        {
+          "filterType": 7,
+          "value": "redhat.vscode-yaml"
+        },
+        {
+          "filterType": 7,
+          "value": "mhutchie.git-graph"
+        },
+        {
+          "filterType": 7,
+          "value": "eamodio.gitlens"
+        },
+        {
+          "filterType": 7,
+          "value": "streetsidesoftware.code-spell-checker"
+        },
+        {
+          "filterType": 7,
+          "value": "johnpapa.winteriscoming"
+        },
+        {
+          "filterType": 8,
+          "value": "Microsoft.VisualStudio.Code"
+        },
+        {
+          "filterType": 12,
+          "value": "4096"
+        }
+      ],
+      "pageNumber": 1,
+      "pageSize": 5,
+      "sortBy": 0,
+      "sortOrder": 0
+    }
+  ],
+  "assetTypes": [],
+  "flags": 950
+}
+```
+
+
+```json
+{
   "results": [
     {
       "extensions": [
