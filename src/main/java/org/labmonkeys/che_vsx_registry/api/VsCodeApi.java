@@ -27,7 +27,7 @@ public interface VsCodeApi {
     @Path("/vscode/asset/{publisher}/{extensionName}/{version}/{assetType}")
     @GET
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response getBlob(@PathParam("publisher") String publisher, @PathParam("extensionName") String extensionName, @PathParam("version") String version, @PathParam("assetType") String assetType, @QueryParam("targetPlatform") String targetPlatform, @Context UriInfo uriInfo);
+    public Response getAsset(@PathParam("publisher") String publisher, @PathParam("extensionName") String extensionName, @PathParam("version") String version, @PathParam("assetType") String assetType, @QueryParam("targetPlatform") String targetPlatform, @Context UriInfo uriInfo);
 
 
 }

@@ -16,7 +16,7 @@ public class VsCodeService implements VsCodeApi {
     }
 
     @Override
-    public Response getBlob(String publisher, String extensionName, String version, String assetType,
+    public Response getAsset(String publisher, String extensionName, String version, String assetType,
             String targetPlatform, UriInfo uriInfo) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getBlob'");
