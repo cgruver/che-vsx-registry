@@ -1,6 +1,6 @@
-package org.labmonkeys.che_vsx_registry.service;
+package org.labmonkeys.che_vsx_registry.service.utilities;
 
-public record QueryFilter(boolean includeVersion,
+public record QueryFlags(boolean includeVersion,
                         boolean includeFiles,
                         boolean includeCatergoryAndTags,
                         boolean includeSharedAccounts,
@@ -26,7 +26,7 @@ public record QueryFilter(boolean includeVersion,
 		public static final int UNPUBLISHED = 0x1000;
 	}
 
-    public QueryFilter(int flags) {
+    public QueryFlags(int flags) {
         this((flags & Flag.INCLUDE_VERSIONS) != 0,
             (flags & Flag.INCLUDE_FILES) != 0,
             (flags & Flag.INCLUDE_CATEGORY_AND_TAGS) != 0,
