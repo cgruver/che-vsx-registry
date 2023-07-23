@@ -17,6 +17,7 @@ import org.labmonkeys.che_vsx_registry.model.Extension;
 import org.labmonkeys.che_vsx_registry.model.ExtensionAsset;
 import org.labmonkeys.che_vsx_registry.model.ExtensionId;
 import org.labmonkeys.che_vsx_registry.model.ExtensionProperty;
+import org.labmonkeys.che_vsx_registry.model.ExtensionTag;
 import org.labmonkeys.che_vsx_registry.model.ExtensionVersion;
 import org.labmonkeys.che_vsx_registry.model.ExtensionVersionId;
 
@@ -63,11 +64,7 @@ public class VsxAdminService implements VsxAdminApi {
             ExtensionId extensionId = new ExtensionId(manifest.get("publisher").asText(), manifest.get("name").asText());
             Extension extension = Extension.findById(extensionId);
             if (extension == null) {
-                extension = new Extension();
-                extension.setId(extensionId);
-                extension.setUuid(UUID.randomUUID().toString());
-                extension.setDisplayName(manifest.get("displayName").asText());
-                extension.setShortDescription(manifest.get("description").asText());
+                extension = createExtension(extensionId, manifest, vsixManifest);
                 extension.persist();
             }
             ExtensionVersionId versionId = new ExtensionVersionId(manifest.get("publisher").asText(), manifest.get("name").asText(), manifest.get("version").asText());
@@ -132,6 +129,18 @@ public class VsxAdminService implements VsxAdminApi {
             return file.getInputStream(file.getEntry(path)).readAllBytes();
         }
         return null;
+    }
+
+    private Extension createExtension(ExtensionId extensionId, JsonNode manifest, JsonNode vsixManifest) {
+
+        Extension extension = new Extension();
+        extension.setId(extensionId);
+        extension.setExtensionUuid(UUID.randomUUID().toString());
+        extension.setPublisherUuid(UUID.randomUUID().toString());
+        extension.setDisplayName(manifest.get("displayName").asText());
+        extension.setShortDescription(manifest.get("description").asText());
+        extension.setTags(vsixManifest.get("Metadata").get("Tags").asText());
+        return extension;
     }
 
     @Override

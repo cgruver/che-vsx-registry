@@ -23,7 +23,10 @@ public class Extension extends PanacheEntityBase {
     ExtensionId id;
 
     @Column()
-    String uuid;
+    String extensionUuid;
+
+    @Column()
+    String publisherUuid;
 
     @Column()
     String displayName;
@@ -36,6 +39,9 @@ public class Extension extends PanacheEntityBase {
 
     @Column()
     LocalDateTime lastUpdated;
+
+    @Column()
+    String tags;
 
     @OneToMany(mappedBy = "extension", cascade = CascadeType.ALL)
     List<ExtensionVersion> versions;

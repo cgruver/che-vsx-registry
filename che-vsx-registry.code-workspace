@@ -27,6 +27,7 @@
 		"workbench.preferredLightColorTheme": "Winter is Coming (Light)",
 		"java.server.launchMode": "Hybrid",
 		"java.configuration.updateBuildConfiguration": "automatic",
-		"files.autoSave": "off"
+		"files.autoSave": "off",
+		"editor.wordWrap": "on"
 	}
 }
