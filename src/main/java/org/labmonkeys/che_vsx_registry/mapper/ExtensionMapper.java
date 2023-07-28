@@ -23,31 +23,25 @@ public interface ExtensionMapper {
     // ExtensionDto ExtensionToDto(Extension entity);
 
     default ExtensionDto ExtensionToDto(Extension entity) {
-        String[] tags = entity.getTags().split(".");
-        return new ExtensionDto(entity.getExtensionUuid(), entity.getId().extensionName(), entity.getDisplayName(), entity.getShortDescription(), null, entity.getId().publisher(), null, null, tags, entity.getPublishedDate().toString(), entity.getPublishedDate().toString(), entity.getPublishedDate().toString(), null, "null");
-    }
 
-    for (String tagString : vsixManifest.get("Metadata").get("Tags").asText().split(".")) {
-        ExtensionTag tag = new ExtensionTag();
-        tag.setTag(tagString);
-        tag.setId(extensionId);
-        tag.setExtension(extension);
-        tags.add(tag);
-    }
+        List<String> tags = new ArrayList<String>();
+        for (String tag : entity.getTags().split(",")) {
+            tags.add(tag);
+        }
 
-    default ExtensionPublisherDto ExtensionToPublisherDto(Extension entity) {
-        return new ExtensionPublisherDto(entity.getId().publisher(), entity.getPublisherUuid(), entity.getId().publisher(), null, Boolean.TRUE);
+        List<String> categories = new ArrayList<String>();
+        for (String category : entity.getCategories().split(",")) {
+            categories.add(category);
+        }
+
+        ExtensionPublisherDto publisher = new ExtensionPublisherDto(entity.getId().publisher(), entity.getPublisherUuid(), entity.getId().publisher(), null, Boolean.TRUE);
+
+        return new ExtensionDto(entity.getExtensionUuid(), entity.getId().extensionName(), entity.getDisplayName(), entity.getShortDescription(), publisher, null, null, tags, entity.getPublishedDate().toString(), entity.getPublishedDate().toString(), entity.getPublishedDate().toString(), categories, "null");
+        
     }
 
     default List<ExtensionStatisticDto> ExtensionNullStatistics() {
         return new ArrayList<ExtensionStatisticDto>();
     }
 
-    default List<String> ExtensionToTags(Extension entity) {
-        List<String> tags = new ArrayList<String>();
-        for (ExtensionTag tag : entity.getTags()) {
-            tags.add(tag.getTag());
-        }
-        return tags;
-    }
 }

@@ -17,7 +17,6 @@ import org.labmonkeys.che_vsx_registry.model.Extension;
 import org.labmonkeys.che_vsx_registry.model.ExtensionAsset;
 import org.labmonkeys.che_vsx_registry.model.ExtensionId;
 import org.labmonkeys.che_vsx_registry.model.ExtensionProperty;
-import org.labmonkeys.che_vsx_registry.model.ExtensionTag;
 import org.labmonkeys.che_vsx_registry.model.ExtensionVersion;
 import org.labmonkeys.che_vsx_registry.model.ExtensionVersionId;
 
@@ -140,6 +139,7 @@ public class VsxAdminService implements VsxAdminApi {
         extension.setDisplayName(manifest.get("displayName").asText());
         extension.setShortDescription(manifest.get("description").asText());
         extension.setTags(vsixManifest.get("Metadata").get("Tags").asText());
+        extension.setCategories(vsixManifest.get("Metadata").get("Categories").asText());
         return extension;
     }
 

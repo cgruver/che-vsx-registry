@@ -43,9 +43,13 @@ public class Extension extends PanacheEntityBase {
     @Column()
     String tags;
 
+    @Column()
+    String categories;
+
+    @Column()
+    ExtensionVersion latest;
+
     @OneToMany(mappedBy = "extension", cascade = CascadeType.ALL)
     List<ExtensionVersion> versions;
 
 }
-
-//String extensionId, String extensionName, String displayName, String shortDescription, ExtensionPublisher publisher, List<ExtensionVersion> versions, List<ExtensionStatistic> statistics, List<String> tags, String releaseDate, String publishedDate, String lastUpdated, List<String> categories, String flags
