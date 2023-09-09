@@ -14,7 +14,7 @@ projects:
 components:
 - name: dev-tools
   container: 
-    image: quay.io/cgruver0/che/che-dev-image:latest
+    image: quay.io/cgruver0/che/che-dev-image:nested
     memoryRequest: 1Gi
     memoryLimit: 6Gi
     cpuRequest: 500m
