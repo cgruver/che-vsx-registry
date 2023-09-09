@@ -11,6 +11,13 @@ projects:
       revision: main
     remotes:
       origin: https://github.com/cgruver/che-vsx-registry.git
+- name: openvsx
+  git:
+    checkoutFrom:
+      remote: origin
+      revision: main
+    remotes:
+      origin: https://github.com/eclipse/openvsx.git
 components:
 - name: dev-tools
   attributes:
