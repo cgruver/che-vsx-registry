@@ -139,14 +139,6 @@ commands:
     label: Start Quarkus Development mode (Hot reload)
     workingDir: '/projects/che-vsx-registry'
   id: quarkus-dev-mode
-- exec:
-    commandLine: "kubedock server --port-forward"
-    component: dev-tools
-    group:
-      kind: run
-    label: Kubedock
-    workingDir: '/'
-  id: kubedock
 - apply:
     component: oc-cli
     label: Copy OpenShift CLI
