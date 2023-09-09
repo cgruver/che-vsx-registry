@@ -13,8 +13,10 @@ projects:
       origin: https://github.com/cgruver/che-vsx-registry.git
 components:
 - name: dev-tools
+  attributes:
+    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse,/dev/net/tun","io.openshift.nested-podman":""}}}
   container: 
-    image: quay.io/cgruver0/che/che-dev-image:latest
+    image: quay.io/cgruver0/che/che-dev-image:nested
     memoryRequest: 1Gi
     memoryLimit: 6Gi
     cpuRequest: 500m
@@ -28,14 +30,6 @@ components:
       value: "/projects/home"
     - name: HISTFILE
       value: "/projects/home/.sh_history"
-    - name: TESTCONTAINERS_RYUK_DISABLED
-      value: "true"
-    - name: TESTCONTAINERS_CHECKS_DISABLE
-      value: "true"
-    - name: DOCKER_HOST
-      value: "tcp://127.0.0.1:2475"
-    - name: CONTAINER_HOST
-      value: "tcp://127.0.0.1:2475"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/che-vsx-registry/che-vsx-registry.code-workspace"
     - name: DEBUG_PORT
@@ -60,9 +54,6 @@ components:
     - name: home
       path: /projects/home
     endpoints:
-      - name: kubedock
-        targetPort: 2475
-        exposure: none
       - name: https-quarkus
         targetPort: 8080
         exposure: public
