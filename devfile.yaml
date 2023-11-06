@@ -20,8 +20,6 @@ projects:
       origin: https://github.com/eclipse/openvsx.git
 components:
 - name: dev-tools
-  attributes:
-    pod-overrides: {"metadata": {"annotations": {"io.kubernetes.cri-o.Devices":"/dev/fuse,/dev/net/tun","io.openshift.nested-podman":""}}}
   container: 
     image: quay.io/cgruver0/che/che-dev-image:nested
     memoryRequest: 1Gi

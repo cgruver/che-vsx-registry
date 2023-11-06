@@ -12,8 +12,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "cdi")
 public interface ExtensionMapper {
-    
-    
+
     // @Mapping(source = "id.extensionName", target = "extensionName")
     // @Mapping(source = "extensionUuid", target = "extensionId")
     // @Mapping(source = "displayName", target = "displayName")
