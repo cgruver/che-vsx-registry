@@ -8,7 +8,6 @@ import org.labmonkeys.che_vsx_registry.dto.response.ExtensionPublisherDto;
 import org.labmonkeys.che_vsx_registry.dto.response.ExtensionStatisticDto;
 import org.labmonkeys.che_vsx_registry.model.Extension;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "cdi")
 public interface ExtensionMapper {
